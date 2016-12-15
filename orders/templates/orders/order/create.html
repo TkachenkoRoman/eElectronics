@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block navbar %}
+    {% include "navbar.html" with is_checkout=True %}
+{% endblock %}
+
+{% block maincontainer %}
+
+
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>Checkout</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                 <div class="col-md-8">
+                    <div class="product-content-right">
+                        <div class="woocommerce">
+                            <div class="woocommerce-info">Returning customer? <a class="showlogin" data-toggle="collapse" href="#login-form-wrap" aria-expanded="false" aria-controls="login-form-wrap">Click here to login</a>
+                            </div>
+
+                            <form id="login-form-wrap" class="login collapse" method="post">
+
+
+                                <p>If you have shopped with us before,
+please enter your details in the boxes below. If you are a new customer
+please proceed to the Billing &amp; Shipping section.</p>
+
+                                <p class="form-row form-row-first">
+                                    <label for="username">Username or email <span class="required">*</span>
+                                    </label>
+                                    <input id="username" name="username" class="input-text" type="text">
+                                </p>
+                                <p class="form-row form-row-last">
+                                    <label for="password">Password <span class="required">*</span>
+                                    </label>
+                                    <input id="password" name="password" class="input-text" type="password">
+                                </p>
+                                <div class="clear"></div>
+
+
+                                <p class="form-row">
+                                    <input value="Login" name="login" class="button" type="submit">
+                                    <label class="inline" for="rememberme"><input value="forever" id="rememberme" name="rememberme" type="checkbox"> Remember me </label>
+                                </p>
+                                <p class="lost_password">
+                                    <a href="#">Lost your password?</a>
+                                </p>
+
+                                <div class="clear"></div>
+                            </form>
+
+                            <div class="woocommerce-info">Have a coupon? <a class="showcoupon" data-toggle="collapse" href="#coupon-collapse-wrap" aria-expanded="false" aria-controls="coupon-collapse-wrap">Click here to enter your code</a>
+                            </div>
+
+                            <form id="coupon-collapse-wrap" method="post" class="checkout_coupon collapse">
+
+                                <p class="form-row form-row-first">
+                                    <input id="coupon_code" placeholder="Coupon code" class="input-text" name="coupon_code" type="text">
+                                </p>
+
+                                <p class="form-row form-row-last">
+                                    <input value="Apply Coupon" name="apply_coupon" class="button" type="submit">
+                                </p>
+
+                                <div class="clear"></div>
+                            </form>
+
+                            <form enctype="multipart/form-data" action="#" class="checkout" method="post" name="checkout">
+
+                                <div id="customer_details" class="col2-set">
+                                    <div class="col-1">
+                                        <div class="woocommerce-billing-fields">
+                                            <h3>Billing Details</h3>
+                                                <form action="." method="post" class="order-form">
+													{{ form.as_p }}
+														<p><input type="submit" value="Place order"></p>
+														{% csrf_token %}
+													</form>
+                                            <div class="clear"></div>
+
+
+                                            <div class="create-account">
+                                                <p>Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
+                                                <p id="account_password_field" class="form-row validate-required">
+                                                    <label class="" for="account_password">Account password <abbr title="required" class="required">*</abbr>
+                                                    </label>
+                                                    <input value="" placeholder="Password" id="account_password" name="account_password" class="input-text" type="password">
+                                                </p>
+                                                <div class="clear"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <h3 id="order_review_heading">Your order</h3>
+
+                                <div id="order_review" style="position: relative;">
+                                    <table class="shop_table">
+                                        <thead>
+                                            <tr>
+                                                <th class="product-name">Product</th>
+                                                <th class="product-total">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+										{% for item in cart %}
+                                            <tr class="cart_item">
+                                                <td class="product-name">
+                                                    {{ item.product.name }} <strong class="product-quantity">{{ item.quantity }}</strong> </td>
+                                                <td class="product-total">
+                                                    <span class="amount">${{ item.total_price }}</span> </td>
+                                            </tr>
+										{% endfor %}
+
+                                        </tbody>
+                                        <tfoot>
+
+                                            <tr class="cart-subtotal">
+                                                <th>Cart Subtotal</th>
+                                                <td><span class="amount">{{ cart.get_subtotal_price }}</span>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="shipping">
+                                                <th>Discounts</th>
+                                                <td>
+
+                                                    {{ cart.get_total_disount }}
+                                                    <input class="shipping_method" value="free_shipping" id="shipping_method_0" data-index="0" name="shipping_method[0]" type="hidden">
+                                                </td>
+                                            </tr>
+                                            {% if cart.coupon %}
+                                            <tr class="cart-subtotal">
+
+                                                <th>"{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)</th>
+                                                <td><span class="amount">${{ cart.get_discount|floatformat:"2" }}</span>
+                                                </td>
+                                            </tr>
+                                            {% endif %}
+
+                                            <tr class="order-total">
+                                                <th>Order Total</th>
+                                                <td><strong><span class="amount">${{ cart.get_total_price_after_discount|floatformat:"2" }}</span></strong> </td>
+                                            </tr>
+
+                                        </tfoot>
+                                    </table>
+
+
+                                    <div id="payment">
+                                        <ul class="payment_methods methods">
+                                            <li class="payment_method_bacs">
+                                                <input data-order_button_text="" checked="checked" value="bacs" name="payment_method" class="input-radio" id="payment_method_bacs" type="radio">
+                                                <label for="payment_method_bacs">Direct Bank Transfer </label>
+                                                <div class="payment_box payment_method_bacs">
+                                                    <p>Make your payment
+ directly into our bank account. Please use your Order ID as the payment
+ reference. Your order won’t be shipped until the funds have cleared in
+our account.</p>
+                                                </div>
+                                            </li>
+                                            <li class="payment_method_cheque">
+                                                <input data-order_button_text="" value="cheque" name="payment_method" class="input-radio" id="payment_method_cheque" type="radio">
+                                                <label for="payment_method_cheque">Cheque Payment </label>
+                                                <div style="display:none;" class="payment_box payment_method_cheque">
+                                                    <p>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
+                                                </div>
+                                            </li>
+                                            <li class="payment_method_paypal">
+                                                <input data-order_button_text="Proceed to PayPal" value="paypal" name="payment_method" class="input-radio" id="payment_method_paypal" type="radio">
+                                                <label for="payment_method_paypal">PayPal <img alt="PayPal Acceptance Mark" src="{% static 'images/AM_mc_vs_ms_ae_UK.png' %}"><a title="What is PayPal?" onclick="javascript:window.open('https://www.paypal.com/gb/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;" class="about_paypal" href="https://www.paypal.com/gb/webapps/mpp/paypal-popup">What is PayPal?</a>
+                                                </label>
+                                                <div style="display:none;" class="payment_box payment_method_paypal">
+                                                    <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+
+                                        <div class="form-row place-order">
+
+                                            <input data-value="Place order" value="Place order" id="place_order" name="woocommerce_checkout_place_order" class="button alt" type="submit">
+
+
+                                        </div>
+
+                                        <div class="clear"></div>
+
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

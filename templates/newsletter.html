@@ -1,0 +1,12 @@
+<div class="footer-newsletter">
+    <h2 class="footer-wid-title">Newsletter</h2>
+    <p>Sign up to our newsletter and get exclusive deals you wont find anywhere else straight to your inbox!</p>
+    <div class="newsletter-form">
+        <form method='POST' action=''>{% csrf_token %}
+            <div class="newsletter-form">
+                <input name="email" placeholder="Type your email" type="email">
+                <input value="Subscribe" type="submit">
+            </div>
+        </form>
+    </div>
+</div>

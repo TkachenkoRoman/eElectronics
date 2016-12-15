@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block navbar %}
+    {% include "navbar.html" with is_checkout=True %}
+{% endblock %}
+
+{% block maincontainer %}
+<div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2><strong>Thank you</strong></h2>
+                            <h2>Your order has been successfully completed. Your order number is <strong>{{ order.id }}</strong>.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

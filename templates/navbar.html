@@ -1,0 +1,12 @@
+<div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+
+        {% if is_home %}<li class="active"><a href="{% url 'home:home' %}">Home</a></li>{% else %}<li><a href="{% url 'home:home' %}">Home</a></li>{% endif %}
+        {% if is_shop %}<li class="active"><a href="{% url 'shop:product_list' %}">Shop page</a></li>{% else %}<li><a href="{% url 'shop:product_list' %}">Shop page</a></li>{% endif %}
+        {% if is_cart %}<li class="active"><a href="{% url 'cart:cart_detail' %}">Cart</a></li>{% else %}<li><a href="{% url 'cart:cart_detail' %}">Cart</a></li>{% endif %}
+        {% if is_checkout %}<li class="active"><a href="{% url 'orders:order_create' %}">Checkout</a></li>{% else %}<li><a href="{% url 'orders:order_create' %}">Checkout</a></li>{% endif %}
+        {% if is_products %}<li class="active"><a href="{% url 'shop:product_list' %}">Products</a></li>{% else %}<li><a href="{% url 'shop:product_list' %}">Products</a></li>{% endif %}
+        {% if is_contact %}<li class="active"><a href="{% url "contact:contact" %}">Contact</a></li>{% else %}<li><a href="{% url "contact:contact" %}">Contact</a></li>{% endif %}
+
+    </ul>
+</div>

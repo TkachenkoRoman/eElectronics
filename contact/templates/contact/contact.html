@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block navbar %}
+    {% include "navbar.html" with is_contact=True %}
+{% endblock %}
+
+{% block maincontainer %}
+
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>Contact</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Contact us</h2>
+                        <form action=" " method="post">
+                            {% csrf_token %}
+
+                                {{ form.non_field_errors }}
+                                <div class="fieldWrapper">
+                                    {{ form.subject.errors }}
+                                    <label for="{{ form.subject.id_for_label }}">Email subject:</label>
+                                    {{ form.subject }}
+                                </div>
+                                <div class="fieldWrapper">
+                                    {{ form.message.errors }}
+                                    <label for="{{ form.message.id_for_label }}">Your message:</label>
+                                    {{ form.message }}
+                                </div>
+                                <div class="fieldWrapper">
+                                    {{ form.sender.errors }}
+                                    <label for="{{ form.sender.id_for_label }}">Your email address:</label>
+                                    {{ form.sender }}
+                                </div>
+                                <div class="fieldWrapper">
+                                    {{ form.cc_myself.errors }}
+                                    <label for="{{ form.cc_myself.id_for_label }}">CC yourself?</label>
+                                    {{ form.cc_myself }}
+                                </div>
+                            <input type="submit" value="Submit" />
+                        </form>
+
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+{% endblock %}
